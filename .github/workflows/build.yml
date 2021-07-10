@@ -1,0 +1,15 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Test building
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Build library
+      run: cargo check
