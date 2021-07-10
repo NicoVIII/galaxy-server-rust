@@ -7,4 +7,6 @@ edition = "2018"
 
 [dependencies]
 log = "0.4.0"
+rand = "0.8.4"
+simplelog = "0.10.0"
 tungstenite = "0.14.0"
