@@ -743,3 +743,53 @@ pub fn generate_dots(x_size: usize, y_size: usize) -> Vec<t::DotPos> {
 
     return new_dot_list;
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use t::*;
+
+    fn generic_test(width: usize, height: usize) {
+        for _ in 0..10 {
+            let board = generate_dots(width, height);
+
+            // Amount of generated dots
+            assert!(board.len() > 0);
+            assert!(board.len() <= width * height);
+
+            // Test that generated dots make sense
+            let mut seen_dots = Vec::new();
+            for dot in board {
+                // Dots have to be unique
+                assert!(!seen_dots.contains(&dot));
+                // Dots have to be inside the board
+                assert!(dot.0 < width * 2);
+                assert!(dot.1 < height * 2);
+                // Dots can't have direct neighbors
+                if dot.0 > 0 {
+                    assert!(!seen_dots.contains(&DotPos(dot.0 - 1, dot.1)))
+                }
+                if dot.1 > 0 {
+                    assert!(!seen_dots.contains(&DotPos(dot.0, dot.1 - 1)))
+                }
+                if dot.0 < width * 2 {
+                    assert!(!seen_dots.contains(&DotPos(dot.0 + 1, dot.1)))
+                }
+                if dot.0 < height * 2 {
+                    assert!(!seen_dots.contains(&DotPos(dot.0, dot.1 + 1)))
+                }
+                // TODO: neighbor checks for on grid dots
+                seen_dots.push(dot);
+            }
+        }
+    }
+
+    #[test]
+    fn dynamic() {
+        for w in 1..=12 {
+            for h in 1..=12 {
+                generic_test(w, h);
+            }
+        }
+    }
+}
