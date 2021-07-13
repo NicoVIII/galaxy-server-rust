@@ -1,0 +1,10 @@
+tasks:
+  - init: cargo fetch
+
+vscode:
+  extensions:
+    - swellaby.vscode-rust-test-adapter
+    - serayuzgur.crates
+    - belfz.search-crates-io
+    - bungcip.better-toml
+    - hbenl.vscode-test-explorer
